@@ -1,9 +1,40 @@
-function AppRoutes() {
+import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
+import Home from "../components/Home";
+import Login from "../components/Login";
+import NavbarP from "../components/NavbarP";
+// import Profile from "../components/Profile";
+// import { PrivateRoutes, PublicRoutes } from "./PublicAndPrivateRoutes";
+
+
+
+const AppRoutes = ()=> {
   return (
-    <div className="App">
-      <h1>HOLA</h1>
-    </div>
+    <>
+      <BrowserRouter>
+      <NavbarP/>
+            <Routes>
+              <Route path="/login" element={<Login/>} />
+              {/* <Route path="/login" element=
+                {
+                  <PublicRoutes>
+                    <Login/>   
+                  </PublicRoutes>   
+                }   
+              />
+              <Route path="/*" element=
+              {
+                <PrivateRoutes>
+                  <Route path="/home" element={<Home/>}/>
+                  <Route path="/profile" element={<Profile/>}/>
+                </PrivateRoutes>
+              } 
+              /> */}
+            </Routes>
+      </BrowserRouter>
+    </>
   );
 }
 
 export default AppRoutes;
+
+{/* <Route path="/*" element={<Navigate to="/" />}/> */}
