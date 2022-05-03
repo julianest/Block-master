@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/Block-master/static/css/main.e6c13ad2.css",
-    "main.js": "/Block-master/static/js/main.e06c1745.js",
+    "main.css": "/Block-master/static/css/main.81310fae.css",
+    "main.js": "/Block-master/static/js/main.bffcf610.js",
     "index.html": "/Block-master/index.html",
-    "main.e6c13ad2.css.map": "/Block-master/static/css/main.e6c13ad2.css.map",
-    "main.e06c1745.js.map": "/Block-master/static/js/main.e06c1745.js.map"
+    "main.81310fae.css.map": "/Block-master/static/css/main.81310fae.css.map",
+    "main.bffcf610.js.map": "/Block-master/static/js/main.bffcf610.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.e06c1745.js"
+    "static/css/main.81310fae.css",
+    "static/js/main.bffcf610.js"
   ]
 }
