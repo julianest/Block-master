@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(37 36 36);
 }
 
 code {
@@ -12,6 +13,60 @@ code {
     monospace;
 }
 
-.lite{
+.blockMaster{
   color: white;
+  text-align: center;
+  animation: blockMasterAnimation 8s linear infinite alternate both;
+  font-size: bold;
 }
+
+@keyframes blockMasterAnimation{
+0%{
+  color: white; 
+}
+25%{
+  color: blue; 
+}
+50%{
+  color: #ea2222; 
+}
+75%{
+  color: #353535; 
+}
+100%{
+  color: green; 
+}
+
+}
+
+.concord-img{
+  max-width: 85%;
+  border:0;
+  display: block;
+  z-index: -1;
+  position: absolute;
+  object-fit: cover;
+}
+
+.loginCont{
+  width: 40%;
+  height: 40%;
+  color: white;
+  margin-top: 10%;
+}
+/* @media(min-width: 668px){
+} */
+@media(max-width: 667px){
+  .loginCont{
+    width: 92%;
+    height: 0%;
+    color: white;
+    margin-right: 60%;
+    margin-top: 62%;
+  }
+  .concord-img{
+    max-width: 94%;
+    height: auto;
+  }
+}
+
