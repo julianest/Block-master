@@ -1,0 +1,258 @@
+<Container style={{color: "white"}}>
+        <Form id="formulario" onSubmit={handleSubmit} className="formulario">
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre *</Form.Label>
+              <Form.Control placeholder="Nombre"  name="nombre" id="idNombre"  onChange={handleInputChange} required/>
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Apellido *</Form.Label>
+                <Form.Control placeholder="Apellido" name="apellido" id="idApellido"  onChange={handleInputChange} required/>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Tipo de Documento *</Form.Label>
+              <Form.Select name="tipoDocumento" id="idTipo" onChange={handleInputChange} required>
+                  <option value="null" name='seleccionar'>Seleccionar</option>
+                  <option value="C.C" name='C.C'>C.C</option>
+                  <option value="T.I" name='T.I'>T.I</option>
+                  <option value="C.E" name='C.E'>C.E</option>
+              </Form.Select>
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Numero de Documento *</Form.Label>
+                <Form.Control type="number" placeholder="Numero de documento" name="documento" id="idDocumento" min={0} onChange={handleInputChange} required/>
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Correo *</Form.Label>
+                <Form.Control type="email" placeholder="correo" name="correo" id="inputCorreo"  onChange={handleInputChange} required/>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Imagen Perfil</Form.Label>
+                <Form.Control type="file" placeholder="Cargar Imagen" name="imagenPerfil" id="btnImg"  onChange={handleInputChange} />
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Contraseña *</Form.Label>
+                <Form.Control type="password" placeholder="contraseña" name="password" id="inputPassword" onChange={handleInputChange} ref={inputRef} required/>
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Repetir Contraseña *</Form.Label>
+                <Form.Control type="password" placeholder="repetir contraseña" name="repPassword" id="inputrepPassword" onChange={handleInputChange} ref={inputRef} required/>
+            </Form.Group>
+
+            <Button type="submit" onClick={validButton}>Submit</Button>
+
+        </Form>
+      </Container>
+
+
+
+      -------------
+
+
+      // import axios from 'axios';
+// import React, {useRef} from 'react';
+// import { useState } from 'react';
+import { Button, Form, Container } from "react-bootstrap";
+// import { useDispatch } from 'react-redux';
+// import {useForm} from "../hooks/useForm";
+// import { AddProfile } from '../redux/actions/actionProfile';
+import {Formik, Form as FormikForm, FormikField, ErrorMessage, useFormik} from "formik";
+import * as Yup from "yup";
+
+// import { fileUpload } from '../helpers/fileUpload';
+// import { url } from '../helpers/url';
+// import '../styles/Form.css'
+
+
+const ProfileForm = () => {
+// const [estudiantes, setEstudiantes] = useState({
+//   nombre: "",
+//   tipo: "",
+//   numero: "",
+//   telefono: "",
+//   celular: "",
+//   direccion: "",
+//   imagen: ""
+// });
+
+//vemos los cambios en tiempo real para ello se usa en cada input un evento onChange
+// const handleChange = ({target}) =>{
+//     setEstudiantes({
+//       ...estudiantes,
+//       //con target.name buscamos directamente por el input la propiedad no usando asi un for in.
+//       [target.name]: target.value
+//       //con llaves se puede acceder forma dinamica a la propiedad de un objeto
+//     })
+//     console.log(estudiantes);
+// }
+
+//para subir las fotos a cloudinary
+// const handleFileChangeImg = ({target})=>{
+//   const fileImg = target.files[0];
+//   console.log(fileImg);
+//   fileUpload(fileImg)
+//   .then(response =>{
+//     estudiantes.imagen = response
+//   }).catch(error => console.log(error))
+// }
+const formik = useFormik({
+  initialValues: {
+    nombre: "",
+    apellido: "",
+    tipoDocumento: "",
+    documento: "",
+    correo:"",
+    imagenPerfil: "",
+    password: "",
+    repPassword: "",
+  },
+  validationSchema: Yup.object({
+    // nombre: Yup.string().required("el nombre es obligatorio"),
+    // apellido: Yup.string().required(),
+    // documento: Yup.number(),
+    // correo: Yup.string().email("no es un email valido").required("el nombre es obligatorio"),
+    password: Yup.string().required().oneOf([Yup.ref("repPassword")], "las contraseñas no son iguales"),
+    repPassword: Yup.string().required().oneOf([Yup.ref("password"), null], "las contraseñas no son iguales")
+
+  }),
+  onSubmit: (formData)=>{
+    console.log(formData)
+  }
+
+})
+// const inputRef = useRef(null);
+// const dispatch = useDispatch();
+// const [formValue, handleInputChange, reset]=useForm({
+//   nombre: "",
+//   apellido: "",
+//   tipoDocumento: "",
+//   documento: "",
+//   correo:"",
+//   imagenPerfil: "",
+//   password: ""  
+// });
+
+// const validButton = () =>{
+//   console.log(inputRef.current.value)
+//   validatePassword(inputRef)
+// }
+// const handleSubmit = (e)=>{
+//   e.preventDefault();
+
+//   console.log(formValue);
+//   dispatch(AddProfile(formValue));
+//   reset();
+        
+// }
+
+  return (
+    <>
+    <main  style={{color: "white"}}>
+
+    <h2>Registrate</h2>
+    <Container style={{color: "black", backgroundColor:"white"}}>
+            <Form id="formulario" onSubmit={formik.handleSubmit}  validated={true}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre *</Form.Label>
+              <Form.Control 
+              placeholder="Nombre"  
+              name="nombre" 
+              onChange={formik.handleChange} 
+              error={formik.errors.name && true} 
+              value={formik.values.nombre} 
+              required
+              />
+              <div className="valid-feedback"></div>
+              <div className="invalid-feedback">Complete este Campo</div>
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Apellido *</Form.Label>
+                <Form.Control placeholder="Apellido" name="apellido" id="idApellido" onChange={formik.handleChange} required />
+                <div className="valid-feedback"></div>
+                <div className="invalid-feedback">Complete este Campo</div>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Tipo de Documento *</Form.Label>
+              <Form.Select name="tipoDocumento" id="idTipo" onChange={formik.handleChange} required>
+                  <option value="null" name='seleccionar'>Seleccionar</option>
+                  <option value="C.C" name='C.C'>C.C</option>
+                  <option value="T.I" name='T.I'>T.I</option>
+                  <option value="C.E" name='C.E'>C.E</option>
+              </Form.Select>
+             
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Numero de Documento *</Form.Label>
+              <Form.Control placeholder="Numero de Documento" name="documento" onChange={formik.handleChange} required />
+                <div className="valid-feedback"></div>
+                <div className="invalid-feedback">Complete este Campo</div>
+            </Form.Group>
+            
+            <Form.Group className="mb-3">
+              <Form.Label>Correo *</Form.Label>
+                <Form.Control type="email" placeholder="correo" name="correo" id="inputCorreo" onChange={formik.handleChange}  required/>
+                <div className="valid-feedback"></div>
+                <div className="invalid-feedback">Complete este Campo</div>
+            </Form.Group>
+
+            <Form.Group controlId="formFile" className="mb-3">
+              <Form.Label>Cargar imagen de perfil</Form.Label>
+              <Form.Control type="file" onChange={formik.handleChange} required/>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Contraseña</Form.Label>
+              <Form.Control
+                type="password"
+                name = "password"
+                id="inputPassword5"
+                aria-describedby="passwordHelpBlock"
+                onChange={formik.handleChange}
+                required
+              />
+              <Form.Text id="passwordHelpBlock" muted>
+                Tu contraseña debe ser entre 8-20 characteres de longitud, debe contener letras, numeros, estar sin espacios, un caracter especial.
+              </Form.Text>
+            </Form.Group>
+
+            <Form.Group className="mb-3">
+            <Form.Label htmlFor="inputPassword5">Confirmar Contraseña</Form.Label>
+            <Form.Control
+              type="password"
+              name = "repPassword"
+              id="inputPassword5"
+              aria-describedby="passwordHelpBlock"
+              onChange={formik.handleChange}
+              required
+            />
+
+            <Form.Text id="passwordHelpBlock" muted={false} >
+              Recuerda que debes confirmar tu contraseña la cual es la misma que la que escribiste en el campo anterior.
+            </Form.Text>
+            </Form.Group>
+            
+            <Button type="submit" 
+            // onClick={formik.handleReset} 
+            >
+              Submit</Button>
+
+        </Form>
+      </Container>
+
+    </main>
+    </>
+  )
+}
+
+export default ProfileForm
+
+
+

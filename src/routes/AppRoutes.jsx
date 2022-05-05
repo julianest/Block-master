@@ -1,8 +1,8 @@
-import {BrowserRouter, Routes, Route, Navigate} from "react-router-dom";
-import Home from "../components/Home";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
+// import Home from "../components/Home";
 import Login from "../components/Login";
 import NavbarP from "../components/NavbarP";
-// import Profile from "../components/Profile";
+import Profile from "../components/Profile";
 // import { PrivateRoutes, PublicRoutes } from "./PublicAndPrivateRoutes";
 
 
@@ -29,6 +29,7 @@ const AppRoutes = ()=> {
                 </PrivateRoutes>
               } 
               /> */}
+              <Route path="/profile" element={<Profile/>}/>
             </Routes>
       </BrowserRouter>
     </>
@@ -37,4 +38,4 @@ const AppRoutes = ()=> {
 
 export default AppRoutes;
 
-{/* <Route path="/*" element={<Navigate to="/" />}/> */}
+//<Route path="/*" element={<Navigate to="/" />}/>

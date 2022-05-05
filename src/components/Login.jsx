@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button, Form, Container } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
 // import GoogleLogin from 'react-google-login';
@@ -91,9 +91,7 @@ const handleSubmit = (e) =>{
         }
         {usuarioValido && <Navigate to="/home" />}
         
-        <Link to={<Navigate to="/profile" />} style={{display: "flex", color: "white", textAlign: "center", justifyContent: "center", margin: "5% 0% 5% 0%"}}>Si no tienes una cuenta puedes registrarte</Link>
-        
-             
+        <Link to="/profile"  style={{display: "flex", color: "white", textAlign: "center", justifyContent: "center", margin: "5% 0% 5% 0%"}}>Si no tienes una cuenta puedes registrarte</Link>
       </Container>
     </>
   );
