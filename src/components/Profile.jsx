@@ -1,19 +1,17 @@
-
 // import React, { useRef } from 'react';
-import { useState } from 'react';
-import { Button, Form, Container, Row, Col, InputGroup } from "react-bootstrap";
-import { useDispatch } from 'react-redux';
 // import { useForm } from "../hooks/useForm";
-import { AddProfile } from '../redux/actions/actionProfile';
-import { useFormik } from "formik";
-import * as yup from "yup";
-import { Navigate } from "react-router-dom"
-
 // import axios from 'axios';
 // import { fileUpload } from '../helpers/fileUpload';
 // import { url } from '../helpers/url';
 // import '../styles/Form.css'
-
+import { useState } from 'react';
+import { Button, Form, Container, Row, Col, InputGroup, Modal } from "react-bootstrap";
+import { useDispatch } from 'react-redux';
+import { RegisterAsync } from '../redux/actions/actionProfile';
+import { useFormik } from "formik";
+import * as yup from "yup";
+import { useNavigate } from 'react-router-dom';
+// import { Navigate } from "react-router-dom"
 
 const ProfileForm = () => {
   // const [estudiantes, setEstudiantes] = useState({
@@ -46,7 +44,10 @@ const ProfileForm = () => {
   //     estudiantes.imagen = response
   //   }).catch(error => console.log(error))
   // }
-
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const lowercaseRegex = /(?=.*[a-z])/;
   const uppercaseRegex = /(?=.*[A-Z])/;
@@ -65,54 +66,42 @@ const ProfileForm = () => {
       terms: false,
     },
     validationSchema: yup.object({
-
       nombre:
         yup.string().required("El Nombre es requerido").min(2, "Muy Corto"),
-
       apellido:
         yup.string().required("El Apellido es requerido").min(2, "Muy Corto"),
-
       correo:
         yup.string().required("El Correo es requerido").email("Debe ser un correo valido Ej: blockMaster@gmail.com").lowercase("El Correo debe estar en letras minusculas"),
-
       Username:
         yup.string().required("El Username es requerido").lowercase("El Username debe estar en letras minusculas").min(4, "Minimo 4 caracteres"),
-
       password:
-        yup.string().required("El Password es requerido").matches(lowercaseRegex, "Como minimo una Letra en minuscula").matches(uppercaseRegex, "Como minimo una Letra en Mayuscula").min(2, "Minimo 2 Caracteres").max(10, "Maximo 10 Caracteres"),
-
+        yup.string().required("El Password es requerido").matches(lowercaseRegex, "Como minimo una Letra en minuscula").matches(uppercaseRegex, "Como minimo una Letra en Mayuscula").min(6, "Minimo 6 Caracteres").max(10, "Maximo 10 Caracteres"),
       confirmPassword:
         yup.string().oneOf([yup.ref("password")], "las contraseñas no son iguales").required("Se debe ingresar el password"),
-
       file:
         yup.mixed(),
-
       terms:
         yup.bool().required().oneOf([true], 'Los terminos y condiciones deben ser aceptados'),
     }),
 
     onSubmit: (formData) => {
-
       setUsuarioValido(true)
-
-
       console.log(formData);
-      dispatch(AddProfile(formData));
+      // dispatch(AddProfile(formData));
+      dispatch(RegisterAsync(formData.correo, formData.password, formData.Username));
     }
-
   })
-
 
   return (
     <>
       <main style={{ color: "white" }}>
-
-        <h2 style={{ color: "white", textAlign: "center", marginTop: "5%" }} className="blockMaster">REGISTRATE</h2>
+        <h2 className="blockMaster">REGISTRATE</h2>
         <Container style={{ backgroundColor: "rgb(37 36 36)", marginBottom: "10%" }}>
 
           {!usuarioValido && <Form noValidate onSubmit={formik.handleSubmit}   >
 
             <Row className="mb-2">
+              {/* Nombre */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -130,7 +119,7 @@ const ProfileForm = () => {
                 />
                 <Form.Control.Feedback type="invalid" tooltip>{formik.errors.nombre}</Form.Control.Feedback>
               </Form.Group>
-
+              {/* Apellido */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -151,7 +140,7 @@ const ProfileForm = () => {
             </Row>
 
             <Row className="mb-2">
-
+              {/* Correo */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -169,7 +158,7 @@ const ProfileForm = () => {
                 />
                 <Form.Control.Feedback type="invalid" tooltip>{formik.errors.correo}</Form.Control.Feedback>
               </Form.Group>
-
+              {/* Username */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -190,15 +179,13 @@ const ProfileForm = () => {
                   <Form.Control.Feedback type="invalid" tooltip>{formik.errors.Username}</Form.Control.Feedback>
                 </InputGroup>
               </Form.Group>
-
             </Row>
 
             <Row className="mb-2">
-
+              {/* Contraseña */}
               <Form.Group
                 as={Col}
                 md="6"
-
                 className="position-relative">
                 <Form.Label htmlFor="inputPassword5">Contraseña</Form.Label>
                 <Form.Control
@@ -210,6 +197,7 @@ const ProfileForm = () => {
                   value={formik.values.password}
                   isValid={formik.touched.password && !formik.errors.password}
                   isInvalid={!!formik.errors.password}
+                  autoComplete="off"
                 />
                 <Form.Control.Feedback type="invalid" tooltip>{formik.errors.password}</Form.Control.Feedback>
                 <Form.Text id="passwordHelpBlock" muted>
@@ -220,7 +208,7 @@ const ProfileForm = () => {
                   *Sin espacios.
                 </Form.Text>
               </Form.Group>
-
+              {/* Confirmar Contraseña */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -229,12 +217,12 @@ const ProfileForm = () => {
                 <Form.Control
                   type="password"
                   name="confirmPassword"
-
                   aria-describedby="passwordHelpBlock"
                   onChange={formik.handleChange}
                   value={formik.values.confirmPassword}
                   isValid={formik.touched.confirmPassword && !formik.errors.confirmPassword}
                   isInvalid={!!formik.errors.confirmPassword}
+                  autoComplete="off"
 
                 />
                 <Form.Control.Feedback type="invalid" tooltip>{formik.errors.confirmPassword}</Form.Control.Feedback>
@@ -245,7 +233,7 @@ const ProfileForm = () => {
             </Row>
 
             <Row className="mb-2">
-
+              {/* Subir Imagen */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -263,7 +251,7 @@ const ProfileForm = () => {
                   {formik.errors.file}
                 </Form.Control.Feedback>
               </Form.Group>
-
+              {/* Aceptar Terminos y Condiciones */}
               <Form.Group
                 as={Col}
                 md="6"
@@ -272,7 +260,7 @@ const ProfileForm = () => {
                 <Form.Check
                   required
                   name="terms"
-                  label="Acepta terminos y condiciones *"
+                  // label="Acepta terminos y condiciones *"
                   onChange={formik.handleChange}
                   isInvalid={!!formik.errors.terms}
                   feedback={formik.errors.terms}
@@ -280,19 +268,35 @@ const ProfileForm = () => {
                   id="validationFormik106"
                   feedbackTooltip
                 />
+                <a href="#Terminos" onClick={handleShow}>
+                Acepta terminos y condiciones *
+                </a>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Terminos y Condiciones</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <p>Si acepta quiere decir que esta dispuesto a <b>REGALARNOS</b> todo su capital sin hacer reclamacion alguna.</p>
+                    <p>Todos los izquierdos reservados</p>
+                    </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cerrar
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
                 <Form.Control.Feedback type="invalid" tooltip>
                   {formik.errors.file}
                 </Form.Control.Feedback>
               </Form.Group>
-
             </Row>
 
-
             <Button type="submit" >Registrarse</Button>
-            <Button type="submit" onClick={formik.handleReset} style={{ marginLeft: "15%" }} >Limpiar Formulario</Button>
+            <Button type="submit" onClick={formik.handleReset} style={{ marginLeft: "10%" }} >Limpiar</Button>
+            <Button onClick={() => navigate(-1)} style={{ marginLeft: "10%" }}>Regresar</Button>
 
           </Form>}
-          {usuarioValido && <Navigate to="/home" />}
+          {/* {usuarioValido && <Navigate to="/home" />} */}
         </Container>
 
       </main>

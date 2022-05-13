@@ -1,9 +1,16 @@
 export const types = {
-    login: "[Autentication] Login",
-    Logout: "[Autentication] Logout"
-}
-
-export const typeRegistration = {
-    register: "add",
     
+    // register: "Register" 
+}
+export const typeRegistration = {
+    register: "regist",
+    login: "Login",
+    logout: "Logout",
+}
+export const typePeliculas = {
+    add: 'add',
+    list: 'list',
+    delete: 'delete',
+    edit: 'edit',
+    search : 'search',
 }
