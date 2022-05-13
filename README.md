@@ -39,7 +39,7 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 **GitHub**  
 ---
 
-Link to Repository [https://github.com/julianest/Guappjalotas](https://github.com/julianest/Guappjalotas).  
+Link to Repository [https://github.com/julianest/Block-master](https://github.com/julianest/Block-master).  
 
 
 ## Backend
@@ -52,4 +52,4 @@ This section has moved here: [https://block-master-8e74d.web.app/](https://block
 
 ### Kanban
 
-![Workflow](https://res.cloudinary.com/docutv7ug/image/upload/v1652414494/Block-Master/kanbanBlockMaster_gwkje5.png "WorkFlow")
+![Workflow](https://res.cloudinary.com/docutv7ug/image/upload/v1652415376/Block-Master/kanbanBlockMaster_cu9rj9.png "WorkFlow")
